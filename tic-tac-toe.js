@@ -31,17 +31,22 @@ document.addEventListener("DOMContentLoaded", function () {
         //Update the board with the latest move
         board[index] = Player;
 
+        //Winner is returned with winCheck
         const winner = winCheck();
+        
+        //If this returns true print message
         if(winCheck()) {
           
           statusMessage.textContent = "Congratulations! " + winner + " is the Winner!";
           statusMessage.classList.add("you-won");
+
+        //If all spaces are filled with no winner show try again message
         } else if (board.every((s) => s !== "")){
           statusMessage.textContent = "No one wins. Try again";
         
         } else {
 
-        //Switches players
+        //Switches players as usual
         Player = Player === "X" ? "O" : "X";
         }
       }
@@ -69,6 +74,8 @@ function winCheck() {
 
 //Game restart function
 const newGame = document.querySelector(".btn");
+
+//On click message is reverted and square are cleared
 newGame.addEventListener("click", function() {
   statusMessage.textContent = original;
   statusMessage.classList.remove("you-won");
@@ -81,8 +88,6 @@ newGame.addEventListener("click", function() {
   //Clear board positions
   board.fill("");
   
-
-
 });
 
 
