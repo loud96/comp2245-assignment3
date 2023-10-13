@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   "use strict";
   const squares = document.querySelectorAll("#board > div");
   let Player = "X";
+
   //Board grid as an array
   const board = ["", "", "", "", "", "", "", "", ""]
   
@@ -29,13 +30,40 @@ document.addEventListener("DOMContentLoaded", function () {
           //Update the board with the latest move
           board[index] = Player;
 
+          const winner = winCheck();
           if(winCheck()) {
-            alert(Player)
-          }
+            const winMessage = document.getElementById("status");
+            winMessage.textContent = "Congratulations! " + winner + " is the Winner!";
+            winMessage.classList.add("you-won");
+          } else {
 
           //Switches players
           Player = Player === "X" ? "O" : "X";
+          }
         }
       });
   });
+
+  function winCheck() {
+    const winCombos =  [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8], //row wins
+      [0, 3, 6], [1, 4, 7], [2, 5, 8], //columns wins
+      [0, 4, 8], [2, 4, 6]             //diagonal wins
+    ];
+    //For every combo, check of spot a has a value and that value is a combo value
+    //Then repeats and compares if that is the equal to b and then c
+    for (const combo of winCombos) {
+      const [a,b,c] = combo;
+      if (board[a] && board[a] === board[b] && board[b] === board[c]) {
+        // Returns the winning letter
+        return board[a];
+      }
+    }
+    //Returns nothing. Game continues
+    return null;
+  }
+
+
+
+
 });
